@@ -1,0 +1,254 @@
+link :https://leetcode.com/problems/climbing-stairs/
+class Solution {
+public:
+    int memo[100];
+    int N;
+    int go(int a)
+    {
+        if(a==N)
+            return 1;
+        if(a>N)
+            return 0;
+        int &res = memo[a];
+        if(res !=-1)
+            return res;
+        return res=go(a+1)+go(a+2);
+    }
+    int climbStairs(int n) {
+        memset(memo , -1 , sizeof memo);
+        N=n;
+        return go(0);
+    }
+};
+________________________________________
+link:https://leetcode.com/problems/min-cost-climbing-stairs/
+class Solution {
+public:
+vector<int>V;
+    int l;
+    int memo[10000];
+    int go(int n)
+    {
+        int &r=memo[n];
+        if(n>=l)
+            return 0;
+        if(r!=-1)
+            return r;
+        return r=min(go(n+1),go(n+2))+V[n];
+    }
+    int minCostClimbingStairs(vector<int>& cost){
+
+        memset(memo ,-1, sizeof memo);
+        l=cost.size();
+        V.clear();
+        for(int i=0;i<l;i++)
+            V.push_back(cost[i]);
+        return min(go(0),go(1));
+    }
+};
+_____________________
+link:https://leetcode.com/problems/jump-game/submissions/
+class Solution {
+public:
+    int memo[10000];
+    vector<int > V;
+    int l;
+    int go(int n)
+    {
+        if(n==l-1)
+            return 1;
+        if(n>l-1)
+            return 0;
+        int &rf=memo[n];
+        
+        if(rf>-1)
+            return rf;
+        rf=0;
+        for(int i=V[n]; i>0;i--)
+        {
+            rf=max(go(i+n),rf);
+            if(rf==1)
+                break;
+        }
+        return rf;        
+    }     
+    bool canJump(vector<int>& nums) {
+        memset(memo, -1, sizeof memo);
+        l=nums.size();    
+        V = nums;
+        int res=go(0);
+        if(res==1)
+            return true;
+        else
+            return false;
+    }
+};
+_______________________
+link:https://leetcode.com/problems/jump-game-ii/submissions/
+class Solution {
+public:
+    vector<int>V;
+    int l;
+    int memo[100000];
+    int go(int n)
+    {
+        int &r=memo[n];
+        if(n>=l-1)
+            return 0;
+        if(r!=-1)
+            return r;
+        int J=INT_MAX-1;
+        for(int i=n;i<n+V[n]; i++)
+            J=min(J,go(i+1)+1);
+
+        return r=J;
+    }
+    int jump(vector<int>& nums) {
+
+        memset(memo,-1,sizeof(memo));
+        l=nums.size();
+
+        for(int i=0; i<l;i++)
+            V.push_back(nums[i]);
+
+        return go(0);
+    }
+};
+_________________________
+link:https://leetcode.com/problems/unique-paths-ii/
+int n,m;
+vector<vector<int>>memo,ar;
+
+int go(int p,int q){
+
+    if(p==n-1 && q==m-1 && ar[p][q]==0)
+        return 1;
+    if(p > n-1 || q > m-1)
+        return 0;
+
+    int &rf = memo[p][q];
+    if(rf!=-1)
+        return rf;
+
+    rf=0;
+   
+     if(ar[p][q]==0){
+        rf=go(p,q+1)+go(p+1,q);
+    }
+    return rf;
+}
+
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        n = obstacleGrid.size();
+        m = obstacleGrid[0].size();
+        ar = obstacleGrid;
+        memo = vector<vector<int>>(n+1, vector<int>(m+1,-1));
+        
+        return go(0,0);
+    }
+};
+__________________________
+link:https://leetcode.com/problems/minimum-path-sum/
+class Solution {
+public:
+    int memo[200][200];
+    vector<vector<int>>ar;
+    
+    int getMin(int x, int y){
+
+        if(x==0 && y==0) return ar[0][0];
+        if(x<0 || y<0) return INT_MAX;
+        
+        int &rf = memo[x][y];
+        if(rf!=-1) return rf;
+        
+        return rf= ar[x][y] + min(getMin(x-1,y), getMin(x,y-1));
+        
+    }
+    int minPathSum(vector<vector<int>>& grid) {
+        int n = grid.size()-1, m = grid[0].size()-1;
+        ar=grid;
+        memset(memo, -1, sizeof(memo));
+        return getMin(n,m);
+    }
+};
+________________________
+link:https://leetcode.com/problems/house-robber/
+class Solution {
+public:
+    int memo[10000],n;
+    vector<int > ar;
+    int go(int p){
+        if(p>=n)return 0;
+        
+        int &rf = memo[p];
+        if(rf!=-1)return rf;
+        rf=max(go(p+2),go(p+3))+ar[p];
+        return rf;
+    }
+    
+    int rob(vector<int>& nums) {
+        n=nums.size();
+        ar=nums;
+        memset(memo, -1 ,sizeof memo);
+        int a = go(0);
+        int b = go(1);
+        return max(a,b);
+    }
+};
+
+________________________________________
+link:https://leetcode.com/problems/house-robber/submissions/
+class Solution {
+public:
+    int l;
+    vector<int>V,dp;
+    int go(int n)
+    {
+        if(n==l-1)
+            return V[n];
+        if(n>l-1)
+            return 0;
+        int &r=dp[n];
+        if(r>-1)
+            return r;        
+        return r=max(go(2+n),go(3+n))+V[n];
+    }
+    int rob(vector<int>& nums) {
+        l=nums.size();
+        V=nums;
+        dp=vector<int>(l,-1);
+        return max(go(0),go(1));
+    }
+};
+__________________________
+link:https://leetcode.com/problems/house-robber-ii/
+class Solution {
+public:
+    int l,L;
+    vector<int>V;
+    int memo[101];
+    int go(int a,int n){
+        if(a>=n)
+            return 0;
+        int &rf=memo[a];
+        if(rf>-1)
+            return rf;
+        return rf=max(go(2+a,n),go(3+a,n))+V[a];
+    }
+    int rob(vector<int>& nums){
+        l=nums.size();
+        V=nums;
+        memset(memo,-1,sizeof(memo));
+        if(l==1)
+            return V[0];
+        if(l==2)
+            return max(V[0],V[1]);
+        int res=max(go(2,l),go(1,l));
+        memset(memo,-1,sizeof(memo));
+        res=max(go(0,l-1),res);
+        return res;
+    }
+};

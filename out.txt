@@ -1,0 +1,13 @@
+To get from 2 to LLLLLLLLL takes 1 knight moves.
+To get from LLWWLLWLL to LWWLLLLLL takes 1 knight moves.
+To get from LWWWLWWLL to LLLWWWLLL takes 1 knight moves.
+To get from LLLLLLLLL to LLLWWLLWL takes 0 knight moves.
+To get from LLWLWLLLL to LLLLLLLLL takes 0 knight moves.
+To get from 3 to 2 takes 1 knight moves.
+To get from 7 to 5 takes 1 knight moves.
+To get from LLLLLLLLL to LLWWLLWLL takes 0 knight moves.
+To get from LWWLLLLLL to LWWWLWWLL takes 0 knight moves.
+To get from LLLWWWLLL to LLLLLLLLL takes 0 knight moves.
+To get from LLLWWLLWL to LLWLWLLLL takes 0 knight moves.
+To get from LLLLLLLLL to 3 takes 1 knight moves.
+To get from 2 to 7 takes 1 knight moves.

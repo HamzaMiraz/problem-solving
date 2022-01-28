@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+#include <string.h>
+int fun(int a ,int b)
+{
+    if(a>b)
+    {
+        printf(">\n");
+    }
+    else if(a<b)
+    {
+        printf("<\n");
+    }
+    else
+    {
+        printf("=\n");
+    }
+
+
+}
+
+int main()
+{
+    freopen("in.txt", "r", stdin);  ///To read from a file.
+//    freopen("out.txt", "w", stdout);  ///To write  a file.
+    int a,b,i,t;
+
+        scanf("%d",&t);
+
+    for(i=0;i<t;i++)
+    {
+        scanf("%d%d",&a,&b);
+
+    fun(a,b);
+
+    }
+
+    return 0;
+}
