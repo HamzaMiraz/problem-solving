@@ -22,6 +22,10 @@ int GetSpot(const string &name, int &numNamesAdded)
     }
 }
 
+/**
+We changes something here.
+*/
+
 int main()
 {
     int n, r;
