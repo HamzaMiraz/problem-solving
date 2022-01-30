@@ -27,6 +27,7 @@ struct debugger
 typedef long long LL;
 const double PI = acos(-1);
 const double EPS = 1e-7; ///1*10^-7
+const int oo = 1e8+0.5;
 
 int main()
 {

@@ -1,18 +1,21 @@
 #include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
+#include <math.h>
 
 #include <iostream>
-#include <vector>
-#include <map>
-#include <queue>
 #include <string>
+#include <vector>
+#include <sstream>
 #include <algorithm>
+#include <queue>
+#include <map>
 using namespace std;
 
+#define deb(a)     cout<<__LINE__<<"# "<<#a<<" -> "<<a<<endl;
+
 //For Debugging
-#define debug(a...)          {cout<<" #--> ";dbg,a; cout<<endl;}
+#define debug(a...)          {cout<<__LINE__<<"#--> ";dbg,a; cout<<endl;}
 struct debugger
 {
     template<typename T> debugger& operator , (const T v)
@@ -22,101 +25,139 @@ struct debugger
     }
 } dbg;
 
+/*
+    if(st.find(val)!=st.end())
+    {
 
-#define deb(a)     cout<<__LINE__<<"# "<<#a<<" -> "<<a<<endl;
-typedef long long LL;
-const double PI = acos(-1);
-const double EPS = 1e-7; ///1*10^-7
-
-struct Edge{
-    int u, v, w;
-
-    Edge(int ui, int vi, int wi){
-        u = ui;
-        v = vi;
-        w = wi;
     }
+*/
+
+
+typedef long long LL;
+const LL MOD = 1000000007;
+const double EPS = 1e-7; ///1*10^-7
+const int Size = 201;
+
+int N,E;
+string S,D;
+int tsk=1;
+struct Nod
+{
+  int u;
+  int w;
+  Nod(int ui,int wi)
+  {
+      u=ui;
+      w=wi;
+  }
+  bool operator<(const Nod&b)const{
+    return w < b.w;
+  }
 };
 
-const int Vertex_N = 101;
+map<string,int>mp;
+vector<int>V[Size];
+vector<int>W[Size];
+int dis[Size];
+int par[Size];
+bool flag[Size];
 
-vector<Edge>edgeList;
-int rnk[Vertex_N];
-int par[Vertex_N];
-
-void init(int n)
+void Init()
 {
-    edgeList.clear();
-
-    for(int i=1;i<=n;i++){
-        rnk[i] = 0;
-        par[i] = i;
+    mp.clear();
+    for(int i=1; i<=N;i++)
+    {
+        dis[i]=-1;
+        par[i]=0;
+        flag[i]=false;
+        V[i].clear();
+        W[i].clear();
     }
 }
-
-int findSet(int u){
-    if(u != par[u]){
-        par[u] = findSet(par[u]);
-    }
-    return par[u];
-}
-
-void makeLink(int setU, int setV)        /// Link + Union
+void Prims(int s)
 {
-    if(rnk[setU]> rnk[setV]){
-        par[setV] = setU;
-    }
-    else {
-        par[setU] = setV;
-        if(rnk[setU]== rnk[setV]){
-            rnk[setV]++;
+    dis[s]=0;
+    priority_queue<Nod>pq;
+    pq.push(Nod(s,0));
+
+    while(!pq.empty())
+    {
+        Nod a=pq.top();
+        pq.pop();
+        int u=a.u;
+        int wight=a.w;
+
+        if(flag[u]==true)
+            continue;
+        flag[u]=true;
+        for(int i=0; i<V[u].size();i++)
+        {
+            int v=V[u][i];
+            int w=W[u][i];
+            if(flag[v]==false&&dis[v] < w)
+            {
+                dis[v]= w;
+                par[v]= u;
+                pq.push({v,dis[v]});
+            }
         }
     }
+
 }
 
-bool com(Edge &a, Edge &b){
-    return a.w < b.w;
-}
-
-int MST_Kruskal(){
-    int sum = INT_MAX;
-
-    sort(edgeList.begin(), edgeList.end(), com);
-
-    for(auto edg: edgeList){
-        int setU = findSet(edg.u);
-        int setV = findSet(edg.v);
-
-        if(setU != setV){
-            par[setU]=setV;
-            if(sum>edg.w)sum=edg.w;
-        }
-        makeLink(setU, setV);
+int Miniwight(int s,int e)
+{
+    int c=dis[e];
+    while(s!=par[e])
+    {
+        e=par[e];
+        if(c>dis[e])
+            c=dis[e];
     }
-
-    return sum;
+    return c;
 }
-
 int main()
 {
-//    freopen("in.txt", "r", stdin);  ///To read from a file.
-//    freopen("out.txt", "w", stdout);  ///To write  a file.
-    int V, E;
+//    freopen("f1.txt","r",stdin);
+//    freopen("out.txt","w",stdout);
 
-    while(cin>>V>>E)
+    while(cin>>N>>E && N&&E)
     {
-        init(V);
-
-        for(int i=0;i<E;i++){
-            int u,v,w;
-
+        Init();
+        int c=1;
+        for(int i=0;i<E;i++)
+        {
+            string u,v;
+            int w;
             cin>>u>>v>>w;
-            edgeList.push_back({u,v,w});
+            if(mp.find(u)==mp.end())
+                mp[u]=c++;
+
+            if(mp.find(v)==mp.end())
+                mp[v]=c++;
+            int  a=mp[u],b=mp[v];
+            V[a].push_back(b);
+            V[b].push_back(a);
+            W[a].push_back(w);
+            W[b].push_back(w);
         }
+        cin>>S>>D;
+        if(mp.find(S)==mp.end()||mp.find(D)==mp.end())
+        {
+            printf("Scenario #%d\n",tsk++);
+            printf("0 tons\n");
+            printf("\n");
+            continue;
 
-        int mstCost = MST_Kruskal();
+        }
+        int  s=mp[S],d=mp[D];
+        Prims(s);
 
-        printf("MST Cost: %d\n", mstCost);
+        int Capacity=Miniwight(s,d);
+
+        printf("Scenario #%d\n",tsk++);
+        printf("%d tons\n",Capacity);
+        printf("\n");
     }
 
     return 0;
