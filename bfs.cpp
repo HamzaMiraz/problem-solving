@@ -68,12 +68,8 @@ void BFS(int src)
         }
     }
 }
-
-
 int main()
 {
-
-
     int V, E, src;
 
     while(cin>>V>>E>>src)

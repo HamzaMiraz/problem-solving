@@ -8,7 +8,7 @@ int main()
 //    freopen("out.txt", "w", stdout);  ///To write  a file.
     int n;
     int i, cnt, sum;
-    int ar[10];
+    int ar[100];
 
     while(scanf("%d",&n) ==1)
     {
