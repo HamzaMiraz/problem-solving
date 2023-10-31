@@ -56,7 +56,6 @@ void mergesort(int ar[50],int l,int h)
     {
         int m;
         m=(l+h)/2;
-
         mergesort(ar,l,m);
         mergesort(ar,m+1,h);
         merge(ar,l,m,h);

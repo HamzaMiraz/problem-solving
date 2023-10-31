@@ -52,7 +52,7 @@ void init(int n){
         W[i].clear();
     }
 }
-void Prims(int s)
+int Prims(int s)
 {
     int SumDis=0;
     dis[s]=0;
@@ -68,7 +68,12 @@ void Prims(int s)
         int sd=a.SD;
         if(dis[u]<sd ||vis[u]==true)
             continue;
+
         vis[u]=true;
+        SumDis+=sd;
+        ///edge print
+        if(u!=s)cout<<par[u]<<"->"<<u<<endl;
+
         for(int i=0;i<V[u].size();i++)
         {
             int v=V[u][i];
@@ -83,6 +88,7 @@ void Prims(int s)
             }
         }
     }
+    return SumDis;
 }
 
 int main()
@@ -102,7 +108,32 @@ int main()
             W[u].push_back(w);
             W[v].push_back(w);
         }
-        Prims(S);
+        int Cost=Prims(S);
+        cout<<"MST Cost : "<<Cost<<"\n";
     }
     return 0;
 }
+/*
+
+4 6 1
+1 4 100
+1 2 5
+2 4 50
+2 3 7
+3 4 20
+3 4 10
+
+6 10 1
+1 2 10
+2 3 20
+3 4 20
+4 5 20
+4 6 9
+6 1 8
+5 6 4
+5 1 19
+5 2 17
+5 3 15
+
+*/
+

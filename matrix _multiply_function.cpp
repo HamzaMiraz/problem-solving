@@ -25,7 +25,7 @@ int func(int r1,int c1,int r2,int c2,int a[10][10],int b[10][10],int sum[10][10]
                 printf("\n");
             }
 
-                       for(i=0;i<r1;i++)
+            for(i=0;i<r1;i++)
             {
                 for(j=0;j<c2;j++)
                 {

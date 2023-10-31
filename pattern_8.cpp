@@ -5,7 +5,7 @@
 int main()
 {
 //    freopen("in.txt", "r", stdin);  ///To read from a file.
-//    freopen("out.txt", "w", stdout);  ///To write  a file.
+//    freopen("out.txt", "w", stdout);   ///To write  a file.
     int n , i ,j ;
     while(scanf("%d",&n) ==1)
     {
