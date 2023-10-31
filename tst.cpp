@@ -1,51 +1,115 @@
 #include <stdio.h>
+#include <string.h>
 #include <math.h>
 #include <stdlib.h>
-#include <string.h>
+#include <ctype.h>
 
+#include <algorithm>
 #include <iostream>
 #include <vector>
-#include <queue>
+#include <map>
+#include <set>
 #include <string>
-#include <algorithm>
+#include <sstream>
+#include <queue>
+#include <bitset>
+
 using namespace std;
 
-//For Debugging
-#define debug(a...)          {cout<<" #--> ";dbg,a; cout<<endl;}
-struct debugger
-{
-    template<typename T> debugger& operator , (const T v)
-    {
-        cout<<v<<" ";
-        return *this;
-    }
-} dbg;
+#define deb(a)    cout<<__LINE__<<"# "<<#a<<" -> "<<a<<endl;
+#define pb push_back
+#define OO 2e9+10
 
+typedef long long ll;
+typedef pair<int,int>pii;
 
-#define deb(a)     cout<<__LINE__<<"# "<<#a<<" -> "<<a<<endl;
-typedef long long LL;
-const double PI = acos(-1);
-
-bool com(int a, int b){
-    return a>b;
+template<class T> T abs(T x){
+    if(x<0) return -x;
+    return x;
 }
+template<class T>T sqr(T a){
+    return a*a;
+}
+
+const double pi = acos(-1.0);
+const double eps = 1e-8;
+
 
 int main()
 {
-//    freopen("0.in", "r", stdin);  ///To read from a file.
-//    freopen("out.txt", "w", stdout);  ///To write  a file.
-
-    int ar[20];
-    int n;
-
-    while(cin>>n)
+//    freopen("in.txt","r",stdin);
+//    freopen("output.txt","w",stdout);
+    char str[150],str1[150],ch;
+    int tks,ks=1;
+    scanf("%d",&tks);
+    //gets(str);
+    while(tks--)
     {
-        for(int i=0;i<n;i++)
-            cin>>ar[i];
+        getchar();
+        int i,x,len,len1;
+        map<int,int>mp;
+        scanf("%[^\n]",str);
+        scanf(" %[^\n]",str1);
+        //gets(str1);
+        len = strlen(str);
+        len1 = strlen(str1);
+        for(i=0;i<len1;i++)
+        {
+            ch = str1[i];
+            if(ch<='Z')
+                x = ch -'A';
+            else
+                x = ch - 'a';
+            mp[x]++;
+        }
+        for(i=0;i<len;i++)
+        {
+            ch = str[i];
+            if(ch<='Z')
+                x = ch -'A';
+            else
+                x = ch - 'a';
+            if(mp[x]>0)
+                mp[x]--;
+            else
+                break;
+        }
 
-        sort(&ar[0], &ar[n]);
-   //     sort(ar, ar + n, com); /// reverse system
-        for(int i=0;i<n;i++)    cout<<ar[i]<<", ";  cout<<endl;
+        if(i==len)
+        {
+            printf("Case %d: Yes\n",ks++);
+            continue;
+        }
+
+        mp.clear();
+        for(i=0;i<len;i++)
+        {
+            ch = str[i];
+            if(ch<='Z')
+                x = ch -'A';
+            else
+                x = ch - 'a';
+            mp[x]++;
+        }
+        for(i=0;i<len1;i++)
+        {
+            ch = str1[i];
+            if(ch<='Z')
+                x = ch -'A';
+            else
+                x = ch - 'a';
+            if(mp[x]>0)
+                mp[x]--;
+            else
+                break;
+        }
+        if(i==len1)
+        {
+            printf("Case %d: Yes\n",ks++);
+            continue;
+        }
+        else
+            printf("Case %d: No\n",ks++);
     }
 
     return 0;

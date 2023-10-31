@@ -1,42 +1,160 @@
-#include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include <iostream>
+#include<iostream>
 using namespace std;
 
-//For Debugging
-#define debug(a...)          {cout<<" #--> ";dbg,a; cout<<endl;}
-struct debugger
-{
-    template<typename T> debugger& operator , (const T v)
-    {
-        cout<<v<<" ";
-        return *this;
-    }
-} dbg;
+class BST {
 
+    struct node {
+        int data;
+        node* left;
+        node* right;
+    };
 
-#define deb(a)     cout<<__LINE__<<"# "<<#a<<" -> "<<a<<endl;
-typedef long long LL;
+    node* root;
 
-
-int main()
-{
-    char a[100];
-    int i,l,t;
-    while(gets(a))
-    {
-        l=strlen(a);
-        t=0;
-        for(i=0;i<l;i++)
+    node* makeEmpty(node* t) {
+        if(t == NULL)
+            return NULL;
         {
-            if(isalpha(a[i]) && !isalpha(a[i+1]))
-
-            t++;
+            makeEmpty(t->left);
+            makeEmpty(t->right);
+            delete t;
         }
-        printf("%d\n",t);
+        return NULL;
     }
+
+    node* insert(int x, node* t)
+    {
+        if(t == NULL)
+        {
+            t = new node;
+            t->data = x;
+            t->left = t->right = NULL;
+        }
+        else if(x < t->data)
+            t->left = insert(x, t->left);
+        else if(x > t->data)
+            t->right = insert(x, t->right);
+        return t;
+    }
+
+    node* findMin(node* t)
+    {
+        if(t == NULL)
+            return NULL;
+        else if(t->left == NULL)
+            return t;
+        else
+            return findMin(t->left);
+    }
+
+    node* findMax(node* t) {
+        if(t == NULL)
+            return NULL;
+        else if(t->right == NULL)
+            return t;
+        else
+            return findMax(t->right);
+    }
+
+    node* remove(int x, node* t) {
+        node* temp;
+        if(t == NULL)
+            return NULL;
+        else if(x < t->data)
+            t->left = remove(x, t->left);
+        else if(x > t->data)
+            t->right = remove(x, t->right);
+        else if(t->left && t->right)
+        {
+            temp = findMin(t->right);
+            t->data = temp->data;
+            t->right = remove(t->data, t->right);
+        }
+        else
+        {
+            temp = t;
+            if(t->left == NULL)
+                t = t->right;
+            else if(t->right == NULL)
+                t = t->left;
+            delete temp;
+        }
+
+        return t;
+    }
+
+    void inorder(node* t) {
+        if(t == NULL)
+            return;
+        inorder(t->left);
+        cout << t->data << " ";
+        inorder(t->right);
+    }
+
+    node* find(node* t, int x) {
+        if(t == NULL)
+            return NULL;
+        else if(x < t->data)
+            return find(t->left, x);
+        else if(x > t->data)
+            return find(t->right, x);
+        else
+            return t;
+    }
+
+public:
+    BST() {
+        root = NULL;
+    }
+
+    ~BST() {
+        root = makeEmpty(root);
+    }
+
+    void insert(int x) {
+        root = insert(x, root);
+    }
+
+    void remove(int x) {
+        root = remove(x, root);
+    }
+
+    void display() {
+        inorder(root);
+        cout << endl;
+    }
+
+    void search(int x) {
+        root = find(root, x);
+    }
+};
+
+int main() {
+    BST t;
+    cout<<"How many values do you want to insert?"<<endl;
+    int n,x;
+    cin>>n;
+    cout<<"Enter values :";
+    for(int i=0;i<n;i++){
+        cin>>x;
+        t.insert(x);
+    }
+    char c;
+    cout<<"if you want to display ,insert,delete then press d,i,r"<<endl;
+    while(1){
+        cin>>c;
+        if(c=='d')t.display();
+        if(c=='i'){
+            cout<<"Enter the value : ";
+            cin>>x;
+            t.insert(x);
+        }
+        if(c=='r'){
+            cout<<"Which value do you want to delete? ";
+            cin>>x;
+            t.remove(x);
+        }
+    }
+
     return 0;
 }
