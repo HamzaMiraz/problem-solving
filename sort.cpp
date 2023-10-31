@@ -71,6 +71,12 @@ int main()
         {
             printf("%d ",ar[i]);
         }
+        cout<<"\nreverse"<<endl;
+        reverse(ar, ar + 5);
+        for(int i=0;i<5;i++)
+        {
+            printf("%d ",ar[i]);
+        }
 
 
 

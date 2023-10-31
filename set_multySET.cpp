@@ -4,6 +4,13 @@
 #include <string.h>
 
 #include <iostream>
+#include <vector>
+#include <list>
+#include <map>
+#include <set>
+#include <queue>
+#include <string>
+#include <algorithm>
 using namespace std;
 
 //For Debugging
@@ -20,26 +27,17 @@ struct debugger
 
 #define deb(a)     cout<<__LINE__<<"# "<<#a<<" -> "<<a<<endl;
 typedef long long LL;
+const double PI = acos(-1);
+const double EPS = 1e-7; ///1*10^-7
+const int oo = 1e8+0.5;
 
 int main()
 {
-//    freopen("in.in", "r", stdin);  ///To read from a file.
+//    freopen("in.txt", "r", stdin);  ///To read from a file.
 //    freopen("out.txt", "w", stdout);  ///To write  a file.
-    int n,i;
-    char c[50];
-    while(scanf("%s",c) == 1)
-{
-        n=strlen(c);
-
-        for(i=n-1;i>=0;i--)
-        {
-
-            printf("%c",c[i]);
-
-        }
-        printf(" ");
+    while(scanf("") ==)
+    {
 
     }
-
     return 0;
 }
