@@ -53,14 +53,16 @@ void BFS(int source)
     par[source]  = -1;
     Q.push(source);
 
-    while(!Q.empty()){
+    while(!Q.empty())
+    {
         int u = Q.front();
         Q.pop();
 
-        for(int i=0;i<adj[u].size();i++){
+        for(int i=0;i<adj[u].size();i++)
+        {
             int v = adj[u][i];
 
-            if(col[v]==false)   continue;
+            if(col[v]==false) continue;
 
             col[v] = false;
             dis[v] = 1 + dis[u];

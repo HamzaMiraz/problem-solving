@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-/** ---- Paknami Starts ----*/
 #include <iostream>
 #include <string>
 #include <vector>
@@ -25,14 +24,6 @@ struct debugger
         return *this;
     }
 } dbg;
-/** ---- Paknami Ends ----*/
-
-/*
-    if(st.find(val)!=st.end())
-    {
-
-    }
-*/
 
 
 typedef long long LL;
@@ -64,22 +55,23 @@ void init(){
 bool bellmanFord_IsNegativeWeightCycle(int s){
     dist[s] = 0;
     bool isUpdated;
-
+    /// bellmanford needs meximum V-1 itaration for update all
+    ///nodes minimum distance from source .but why there
+    /// is V iteration , becouse if its update a nodes distance
+    /// after V-1 iteration that means it have nagative cycle
     for(int i=1;i<=V;i++)
     {
         isUpdated = false;
 
-
-
         for(auto edg: edgeList){
             if(dist[edg.v] > dist[edg.u] + edg.w){
-                dist[edg.v] = dist[edg.u] + edg.w;
+                dist[edg.v] = dist[edg.u] + edg.w;/// update node distance from source
                 par[edg.v] = edg.u;
-                isUpdated = true;
+                isUpdated = true;/// if its update V'th itaration
+                                /// thats means it has nagative cycle
             }
         }
     }
-
     return isUpdated;
 }
 
@@ -105,10 +97,10 @@ int main()
         bool isNegativeCycleExist = bellmanFord_IsNegativeWeightCycle(Source);
 
         puts("Distance:");
-        for(int i=1;i<=V;i++)   printf("[%d: %d], ",i, dist[i]);  printf("\n");
+        for(int i=1;i<=V;i++)   printf("[src -> %d= %d], ",i, dist[i]);  printf("\n");
 
         puts("Parent:");
-        for(int i=1;i<=V;i++)   printf("[%d:%d], ",i, par[i]);  printf("\n");
+        for(int i=1;i<=V;i++)   printf("[%d -> %d], ", par[i],i);  printf("\n");
         deb(isNegativeCycleExist);
         puts("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n");
 

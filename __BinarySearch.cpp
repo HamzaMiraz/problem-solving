@@ -68,7 +68,7 @@ int binarySearch_LowerBound(vector<int>&v, int k)  //Lower Bound
 int main()
 {
     freopen("BS.in", "r", stdin);  ///To read from a file.
-//    freopen("out.txt", "w", stdout);  ///To write  a file.
+//    freopen("out.txt", "w", stdout);  ///To write a file.
     int n,val;
 
     while(cin>>n)
@@ -80,13 +80,13 @@ int main()
             v.push_back(val);
         }
         printf("INDEX:  ");for(int i=0;i<n;i++)    printf("%3d", i);    printf("\n");
-        printf("ARRAY: [");for(int i=0;i<n;i++)    printf("%3d", v[i]);    printf("]\n");
+        printf("ARRAY: [");for(int i=0;i<n;i++)    printf("%3d", v[i]); printf("]\n");
 
         int k;
 
         while(cin>>k && k>-1){
                 cout<<"Value: "<<k<<" Lower Index: "<<binarySearch_LowerBound(v, k)<<endl;
-//                cout<<"\t\tValue: "<<k<<" Upper Index: "<<binarySearch_UpperBound(v, k)<<endl;
+                cout<<"\t\tValue: "<<k<<" Upper Index: "<<binarySearch_UpperBound(v, k)<<endl;
         }
     }
     return 0;

@@ -61,6 +61,7 @@ struct Nod{
     }
 
     bool operator<(const Nod& b) const{
+
         return dis > b.dis;
     }
 };
@@ -86,7 +87,7 @@ int dijkstra(int source, int destination){
     priority_queue<Nod>pq;
 
     dist[source] = 0;
-    pq.push(Nod(source, 0));
+    pq.push(Nod(source, 0));///pq.push({source, 0});
 
     while(!pq.empty()){
         Nod cur = pq.top();
@@ -149,6 +150,9 @@ int main()
 
             graph[u].push_back(v);
             weight[u].push_back(w);
+            ///for undirected graph
+            graph[v].push_back(u);
+            weight[v].push_back(w);
         }
 
 

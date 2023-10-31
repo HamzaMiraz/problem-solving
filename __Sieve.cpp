@@ -173,16 +173,23 @@ void sieve ()
             }
         }
 }
-
-
 //#define FILEINPUT
 int main()
 {
     sieve();
-    int n=100;
-    for(int i=1;i<=n;i++)
-        cout<<prime[i]<<", ";
+    int n;
+    cin>>n;
+///first n prime numbers
 
+    for(int i=1;i<=n;i++)
+       cout<<prime[i]<<", ";///i'th prime number
+       cout<<endl;
+///number of prime number under n
+
+    for(int i=1;i<=n;i++){
+        if(isprime[i]==true)
+        cout<<i<<", ";
+    }
 
     return 0;
 }

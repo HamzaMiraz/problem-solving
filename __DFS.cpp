@@ -1,10 +1,8 @@
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <math.h>
 
-/** ---- Paknami Starts ----*/
 #include <iostream>
 #include <string>
 #include <vector>
@@ -26,14 +24,6 @@ struct debugger
         return *this;
     }
 } dbg;
-/** ---- Paknami Ends ----*/
-
-/*
-    if(st.find(val)!=st.end())
-    {
-
-    }
-*/
 
 
 typedef long long LL;
@@ -61,12 +51,12 @@ int par[V_SZ];
 
 int startTime[V_SZ];
 int finishTime[V_SZ];
+int Flattening_tree[2*V_SZ];
 
 vector<int>order;
 
 int Time;
 int V,E;
-
 void init(){
     for(int i =1;i<=V;i++)
     {
@@ -75,6 +65,7 @@ void init(){
         g[i].clear();
 
         startTime[i] = finishTime[i] = -1;
+        Flattening_tree[i]=Flattening_tree[V-i+1]=-1;
     }
     Time = 1;
     order.clear();
@@ -82,7 +73,9 @@ void init(){
 
 void dfs(int u)
 {
-    startTime[u] = Time++;
+    startTime[u] = Time;
+    Flattening_tree[Time]=u;
+    Time++;
     col[u] = GRAY;
 
     for(auto v: g[u])
@@ -97,7 +90,9 @@ void dfs(int u)
 
     order.push_back(u);
 
-    finishTime[u] = Time++;
+    finishTime[u] = Time;
+    Flattening_tree[Time]=u;
+    Time++;
 }
 
 
@@ -116,6 +111,7 @@ int main()
         {
             cin>>u>>v;
             g[u].push_back(v);
+            g[v].push_back(u); ///then it will be nonderected graph
         }
 
         for(int i=1;i<=V;i++)
@@ -128,8 +124,10 @@ int main()
 
         puts("Time:");
         for(int i=1;i<=V;i++)   printf("%d:[%d-%d], ",i, startTime[i], finishTime[i]); puts("");
+        puts("Flattening Tree :");
+        for(int i=1;i<=2*V;i++)   printf("%d, ",Flattening_tree[i]); puts("");
 
-        puts("Order:");
+        puts("Final visited Order:");
         for(auto v: order)  printf("%d, ", v);  puts("");
     }
 

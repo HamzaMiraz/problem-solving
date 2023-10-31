@@ -74,26 +74,26 @@ void init(int n)
 
     for(int i=1;i<=n;i++){
         rnk[i] = 0;
-        par[i] = i;
+        par[i] = i;///call by make func in DSU
     }
 }
 
-int findSet(int u){
+int findSet(int u){   ///find parent of the set/group
     if(u != par[u]){
         par[u] = findSet(par[u]);
     }
     return par[u];
 }
 
-void makeLink(int setU, int setV)        /// Link + Union
-{
-    if(rnk[setU]> rnk[setV]){
+void makeLink(int setU, int setV) ///Link + Union
+{                                 ///connect two vartex + connect two set/group of vertex
+    if(rnk[setU]> rnk[setV]){     ///set/group means a bunch of nodes they r connected
         par[setV] = setU;
     }
     else {
         par[setU] = setV;
         if(rnk[setU]== rnk[setV]){
-            rnk[setV]++;
+            rnk[setV]++;///if two components rank was same then rank++
         }
     }
 }
@@ -108,15 +108,20 @@ int MST_Kruskal(){
     sort(edgeList.begin(), edgeList.end(), com);
 
     for(auto edg: edgeList){
-        int setU = findSet(edg.u);
-        int setV = findSet(edg.v);
+        int setU = findSet(edg.u);///finding root node of setU
+        int setV = findSet(edg.v);///finding root node of setV
 
+        ///if two vertex or groups root parent r same
+        ///then it will be creat a cycle
+        ///Then we won't add them
+        ///else ↓
         if(setU != setV){
             sum += edg.w;
             makeLink(setU, setV);
+            printf("%d->%d = %d\n",edg.u,edg.v,edg.w);
+
         }
     }
-
     return sum;
 }
 
@@ -134,7 +139,7 @@ int main()
             int u,v,w;
 
             cin>>u>>v>>w;
-            edgeList.push_back({u,v,w});
+            edgeList.push_back({u,v,w});//edgeList.push_back(Edge{u,v,w});
         }
 
         int mstCost = MST_Kruskal();

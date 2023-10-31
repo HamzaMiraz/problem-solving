@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-/** ---- Paknami Starts ----*/
 #include <iostream>
 #include <string>
 #include <vector>
@@ -25,14 +24,7 @@ struct debugger
         return *this;
     }
 } dbg;
-/** ---- Paknami Ends ----*/
 
-/*
-    if(st.find(val)!=st.end())
-    {
-
-    }
-*/
 
 
 typedef long long LL;
@@ -91,15 +83,16 @@ int main()
             e.v = v;
             e.w = w;
             edgeList.push_back(e);
+            ///edgeList.push_back({v,u,w});
         }
 
         bellmanFord(Source);
 
         puts("Distance:");
-        for(int i=1;i<=V;i++)   printf("[%d: %d], ",i, dist[i]);  printf("\n");
+        for(int i=1;i<=V;i++)   printf("[src -> %d= %d], ",i, dist[i]);  printf("\n");
 
         puts("Parent:");
-        for(int i=1;i<=V;i++)   printf("[%d:%d], ",i, par[i]);  printf("\n");
+        for(int i=1;i<=V;i++)   printf("[%d -> %d], ", par[i],i);  printf("\n");
     }
 
     return 0;
@@ -113,4 +106,9 @@ int main()
 2 3 7
 3 4 20
 3 4 10
+
+4 3 1
+1 2 4
+2 3 3
+4 1 2
 */
